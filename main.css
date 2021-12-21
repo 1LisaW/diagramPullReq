@@ -1,0 +1,35 @@
+*{
+    box-sizing: border-box;
+}
+html{
+    width: 100%;
+}
+body{
+    width: 100%;
+}
+header{
+    width:80%;
+    margin: auto;
+    height: 60px;
+}
+
+/* .wrapper-grafic, */
+.wrapper-grafic-d3 {
+    width:80%;
+    height: 40rem;
+    border: 2px solid black;
+    margin: auto;
+    /* overflow: hidden; */
+}
+.grafic-row{
+    min-width: 10px;
+    height: 1rem;
+    background-color: cornflowerblue;
+    border:1px solid black;
+}
+.grafic-row--opened {
+    background-color: rgb(197, 80, 90);
+}
+.grafic-row--closed {
+    background-color: rgb(80, 197, 90);
+}
