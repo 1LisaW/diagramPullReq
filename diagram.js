@@ -42,6 +42,27 @@ const newDiagram = (data) =>{
                      .scale(scaleTimeline)
                      .ticks(ticks)
                      .tickFormat(d3.timeFormat('%d.%m'));
+
+    const linearGradient = svg.append("defs")
+                              .append("linearGradient")
+                              .attr("id","cl1")
+                              .attr("gradientUnits","userSpaceOnUse")
+                              .attr("x1","0%")
+                              .attr("y1","0%")
+                              .attr("x2","100%")
+                              .attr("y2","0%");
+    linearGradient.append("stop")
+                  .attr("offset",Math.max(2,hourLength)/graphWidth)
+                  .style("stop-color","grey")
+                  .style("stop-opacity","1");
+    linearGradient.append("stop")
+                  .attr("offset",8*Math.max(2,hourLength)/graphWidth)
+                  .style("stop-color","orange")
+                  .style("stop-opacity","1");
+    linearGradient.append("stop")
+                  .attr("offset",24*7*Math.max(2,hourLength)/graphWidth)
+                  .style("stop-color","red")
+                  .style("stop-opacity","1");                            
     svg.append("g")
         .attr("class","axis")
         .attr("transform", "translate(0,"+graphMargin+")")
@@ -67,11 +88,29 @@ const newDiagram = (data) =>{
         const wraprectangle = svg.append("g")
                                  .attr("class", "trace")
                                  .attr("transform", "translate(0, 0)");
-            wraprectangle.append("rect")
-                         .attr("x",sx)
-                         .attr("y", sy)
+        if((curr.updatedDate-curr.createdDate)/(1000 * 60 * 60) < 1){
+          wraprectangle.append("rect")
+                       .attr("x",0)
+                       .attr("y", 0)
+                       .attr("width", graphWidth)
+                       .attr("height", 10)
+                       .attr("fill","#ffcfd7")
+                       .attr('transform', 'translate(' + 0 + ',' + sy + ')');
+        };
+        const rect = wraprectangle.append("rect")
+                         .attr("x",0)
+                         .attr("y", 0)
                          .attr("width", w)
-                         .attr("height", 10);
+                         .attr("height", 10)
+                         .attr("fill","url(#cl1)")
+                         .attr('transform', 'translate(' + sx + ',' + sy + ')');
+        // if((curr.updatedDate-curr.createdDate)/(1000 * 60 * 60) < 1){
+        //   rect
+        //   // .style("padding","2")
+        //       .attr("stroke","red")
+        //       .attr("stroke-width","3")
+        //       .attr("stroke-dasharray","1");
+        // };
             wraprectangle.append("text")
                          .text(curr.title)
                          .attr("x", isLabelRight ? sx-5 : sx+w+5)

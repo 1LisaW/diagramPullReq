@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'SBSansInterface';
+    src: url('./sb-sans/SBSansUI-Semibold.eot');
+    src:
+        url('./sb-sans/SBSansUI-Semibold.eot?#iefix') format('embedded-opentype'),
+        url('./sb-sans/SBSansUI-Semibold.woff2') format('woff2'),
+        url('./sb-sans/SBSansUI-Semibold.woff') format('woff'),
+        url('./sb-sans/SBSansUI-Semibold.ttf') format('truetype'),
+        url('./sb-sans/SBSansUI-Semibold.svg') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SBSansInterface';
+    src: url('./sb-sans/SBSansUI-Regular.eot');
+    src:
+        url('./sb-sans/SBSansUI-Regular.eot?#iefix') format('embedded-opentype'),
+        url('./sb-sans/SBSansUI-Regular.woff2') format('woff2'),
+        url('./sb-sans/SBSansUI-Regular.woff') format('woff'),
+        url('./sb-sans/SBSansUI-Regular.ttf') format('truetype'),
+        url('./sb-sans/SBSansUI-Regular.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SBSansInterface';
+    src: url('./sb-sans/SBSansUI-Light.eot');
+    src:
+        url('./sb-sans/SBSansUI-Light.eot?#iefix') format('embedded-opentype'),
+        url('./sb-sans/SBSansUI-Light.woff2') format('woff2'),
+        url('./sb-sans/SBSansUI-Light.woff') format('woff'),
+        url('./sb-sans/SBSansUI-Light.ttf') format('truetype'),
+        url('./sb-sans/SBSansUI-Light.svg') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
