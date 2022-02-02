@@ -1,6 +1,32 @@
-const newData = fetch('/data.json');
+const newData = fetch('./data/all_prs.json');
 import {newDiagram} from '/diagram.js';
 import {createSorter} from './src/components/sorter/sorter.js';
+import { buttonSlider } from './src/components/buttonSlider/buttonSlider.js';
+import Chart from './src/components/chart/chart.js';
+// import "./src/components/chart/d3-tip.js";
+
+import {getDateFilter} from"./src/components/dataFilter/dataFilter.js";
+import { repoFilter } from './src/components/repoFilter/repoFilter.js';
+
+const periodSlider={
+    monthAgo:{
+        text:"&lt мес."
+    },
+    weekAgo:{
+        text:"&lt нед."
+    },
+    nowdays:{
+        text:"текущий период"
+    },
+    weekPlus:{
+        text:"&gt нед."
+    },
+    monthPlus:{
+        text:"&gt мес."
+    }
+
+};
+
 const wrapperDiagram = document.querySelector('.wrapper-grafic');
 
 
@@ -43,13 +69,68 @@ async function getData(sorterOrder,newData){
     const dataJSON = await newData;
     const data = await dataJSON.json();
     const currantData =  data.data.reduce((acc,curr,ind)=>{
-        const {title,createdDate,isOpened,isDeclined,updatedDate}= curr;
-        const newValue = {title,createdDate,isOpened,isDeclined,updatedDate}
+        const {
+            repoName, id, title, createdDate, isOpened, isDeclined, updatedDate
+        } = curr;
+        const newValue = {
+            repoName,
+            id,
+            title,
+            createdDate,
+            isOpened,
+            isDeclined,
+            updatedDate
+        }
         
         acc.push(newValue)
         return acc;
     },[]); 
     createSorter(currantData,getSorted);
+    for (let name in periodSlider){
+        buttonSlider(periodSlider[name].text);
+    };
+
+    // **** new visualisation*****
+
+     const interval = 1000 * 60 * 60 * 24; // 24 hours in milliseconds
+     let today = Math.floor(new Date() / interval) * interval;
+
+    const dateLimits = currantData.reduce( (acc, curr) => {
+        acc[0] = acc[0] > curr.createdDate ? curr.createdDate : acc[0];
+        acc[1] = curr.isOpened ? today : (acc[1] < curr.updatedDate ? curr.updatedDate : acc[1]);
+        return acc;
+    }, [currantData[0].createdDate,currantData[0].createdDate]);
+    const repoNames = new Set(['all']);
+    currantData.map(curr => repoNames.add(curr.repoName));
+
+    const rerenderChart=()=>{
+        chart.wrangleVis();
+    }
+    
+    getDateFilter(dateLimits, rerenderChart);
+    const datepickerFirstDate = document.getElementById("datepicker-first-field");
+    const datepickerSecondDate = document.getElementById("datepicker-second-field");
+    
+
+    repoFilter( "#chart-wrapper", repoNames );
+    const repoFilterElem = document.getElementById("repo-filter");
+
+
+    const chart = new Chart("#chart-wrapper", currantData);
+
+    // console.log(chart);
+
+    datepickerFirstDate.addEventListener("click", () => {
+        console.log("here!");
+        chart.wrangleVis();
+    });
+    datepickerSecondDate.addEventListener("change", () => {
+        chart.wrangleVis();
+    });
+    repoFilterElem.addEventListener("change", () => {
+        chart.wrangleVis();
+    });
+  
     return getSorted(currantData);
     
 }
@@ -57,14 +138,20 @@ function getSorted(currantData){
     let sorterOrder = document.querySelector(".search_select") ? 
         document.querySelector(".search_select").value : "createdDate";
     currantData.sort((a,b)=>b[sorterOrder]-a[sorterOrder]);
-    console.log("sorterOrder "+sorterOrder);
-    // let arrCreate =
-    console.log(currantData.map(({createdDate})=>{return (createdDate)}));
-    console.log(currantData.map(({updatedDate})=>{return (updatedDate)}));
 
-    newDiagram(currantData);
+    // newDiagram(currantData);
     return currantData;
 }
 
 
 getData("createdDate",newData);
+
+// const newScale = d3.scaleTime().range([0,400]).domain([new Date('01.01.2011'), new Date("05.01.2011")]);
+// console.log('test',new Date('01.01.2011'));
+// console.log(newScale(new Date('01.01.2011')));
+// console.log(newScale(new Date('02.01.2011')));
+// console.log(newScale(new Date('03.01.2011')));
+// console.log(newScale(new Date('04.01.2011')));
+// console.log(newScale(new Date('31.12.2010')));
+
+

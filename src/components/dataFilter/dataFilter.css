@@ -1,0 +1,20 @@
+.data-wrapper{
+    display: inline-block;
+    position: relative;
+    width: 400px;
+    height: 80px;
+}
+.datepicker-text{
+    position: absolute;
+    top:10px;
+    left: 20px;
+    font-family: "SBSansText";
+}
+#datepicker-first-field, #datepicker-second-field{
+    font-family: "SBSansText";
+    margin: 40px 10px 0 10px;
+    width:25%;
+    /* position: absolute; */
+    /* top:40px; */
+    /* left: 20px; */
+}

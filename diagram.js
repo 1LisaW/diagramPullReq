@@ -25,9 +25,7 @@ const newDiagram = (data) =>{
     const graphHeight =graphMargin*1.5+14.1*data.length;
 
 
-    console.log(ticks);
     const diffForPx = graphWidth/(today-startOfIntervalDay);
-    
 
     const svg = d3.select(".wrapper-grafic-d3")
                   .append("svg")

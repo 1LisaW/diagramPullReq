@@ -1,0 +1,23 @@
+#chart{
+    position: relative;
+    width:80%;
+    height: 600px;
+    margin: auto;
+    overflow: scroll;
+}
+
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+.focus circle {
+    fill: #F1F3F3;
+    stroke: #777;
+    stroke-width: 3px;
+}
+.hover-line {
+    stroke: #777;
+    stroke-width: 2px;
+    stroke-dasharray: 3, 3;
+}

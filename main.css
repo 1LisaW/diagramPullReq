@@ -1,3 +1,16 @@
+@font-face {
+    font-family: 'SBSansText';
+    src: url('./fonts/sb-sans-new/SBSansText-Semibold.eot');
+    src:
+        url('./fonts/sb-sans-new/SBSansText-Semibold.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/sb-sans-new/SBSansText-Semibold.woff2') format('woff2'),
+        url('./fonts/sb-sans-new/SBSansText-Semibold.woff') format('woff'),
+        url('./fonts/sb-sans-new/SBSansText-Semibold.ttf') format('truetype'),
+        url('./fonts/sb-sans-new/SBSansText-Semibold.svg') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
 *{
     box-sizing: border-box;
 }
@@ -11,6 +24,7 @@ header{
     width:80%;
     margin: auto;
     height: 60px;
+    white-space: nowrap;
 }
 
 /* .wrapper-grafic, */
@@ -19,7 +33,7 @@ header{
     height: 40rem;
     border: 2px solid black;
     margin: auto;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 .grafic-row{
     min-width: 10px;
@@ -32,4 +46,10 @@ header{
 }
 .grafic-row--closed {
     background-color: rgb(80, 197, 90);
+}
+/* .chart-wrapper{
+    display: inline-block;
+} */
+#chart{
+    height: 300px;
 }

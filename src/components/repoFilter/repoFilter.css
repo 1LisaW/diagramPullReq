@@ -1,0 +1,18 @@
+#repo-info,
+option,
+select
+    {
+    font-family: "SBSansText";
+}
+
+select option[value="all"] {
+    background:  #555 ;
+    height: 10px;
+    color:white;
+}
+.wrapper-repo-filter{
+    display: inline-block;
+}
+#repo-info{
+    margin:  10px 0 10px 20px;
+}
