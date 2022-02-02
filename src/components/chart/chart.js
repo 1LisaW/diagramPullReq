@@ -1,5 +1,7 @@
-// import "../../../node_modules/d3-tip/dist/index.js";
-// import "./d3-tip.js";
+import * as d3 from "d3";
+import d3Tip from "d3-tip";
+
+import './chart.css';
 
 export default class Chart{
     constructor(_parent, _data ){
@@ -33,7 +35,7 @@ export default class Chart{
             .attr("margin","auto")
             .attr("fill", "grey");
 
-        
+
 
         vis.g = vis.svg.append("g")
             // .attr("width", vis.WIDTH)
@@ -51,7 +53,7 @@ export default class Chart{
                         // .attr("transform",`translate(0,${vis.HEIGHT})`);
         vis.yAxis = vis.g.append("g")
                         .attr("class", "y axis");
-      
+
 
         // console.log("svg", vis.HEIGHT + vis.MARGIN.TOP + vis.MARGIN.BOTTOM);
 
@@ -66,7 +68,7 @@ export default class Chart{
         const parseTime = d3.timeParse('%d/%m/%Y');
         vis.dateStart = parseTime(document.getElementById("datepicker-first-field").value).getTime();
         vis.dateEnd = parseTime(document.getElementById("datepicker-second-field").value).getTime();
-        vis.hourLength = vis.parentWidth 
+        vis.hourLength = vis.parentWidth
             / (24* (vis.dateEnd - vis.dateStart) / vis.interval);
             // console.log("hourLength", vis.hourLength);
             // console.log("24* (vis.dateEnd - vis.dateStart", 24 * (vis.dateEnd - vis.dateStart));
@@ -96,7 +98,7 @@ export default class Chart{
 
          // console.log((vis.dateEnd-vis.dateStart)/vis.interval);
 
-        const repoFilter = document.getElementById("repo-filter").value === "all" ? null 
+        const repoFilter = document.getElementById("repo-filter").value === "all" ? null
             : document.getElementById("repo-filter").value;
         const isDateInPeriod = (date) => {
             if (!date){
@@ -107,12 +109,12 @@ export default class Chart{
         const isUnclosedInPeriod = (createdDate, isOpened) => {
 
             return ( createdDate < vis.dateStart )&&( isOpened );
-        } 
+        }
         vis.filtredData = vis.data.filter( item => {
             if (repoFilter){
                 // console.log(repoFilter);
                 return (item.repoName == repoFilter)
-                &&( isDateInPeriod( item.createdDate) || isDateInPeriod( item.updatedDate ) 
+                &&( isDateInPeriod( item.createdDate) || isDateInPeriod( item.updatedDate )
                 || isUnclosedInPeriod(item.createdDate, item.isOpened));
             }
             else{
@@ -121,7 +123,7 @@ export default class Chart{
             }
         });
         // Tooltip
-        const tip = d3.tip()
+        const tip = d3Tip()
             .attr('class', 'd3-tip')
             .html(d => {
                 let text = `<strong>Title:</strong> <span style='color:red;text-transform:capitalize'>${d.title}</span><br>`
@@ -159,14 +161,14 @@ export default class Chart{
         function getMinDateForRect() {
             return Math.min(d3.min(vis.filtredData, d => d.createdDate), vis.dateStart);
         }
-        // определение домена для расчета ширины прямоугольников - 
-        // разница между датой окончания интервала фильтра и минимальной даты создания/начала интервала 
+        // определение домена для расчета ширины прямоугольников -
+        // разница между датой окончания интервала фильтра и минимальной даты создания/начала интервала
         function getLengthScaleDomain(){
-            return [0, 
+            return [0,
                 vis.dateEnd - getMinDateForRect()
             ]
         };
-        // определение диапазона отрисовки - умножение ширины svg на коэффициент отношения разницы даты окончания интервала 
+        // определение диапазона отрисовки - умножение ширины svg на коэффициент отношения разницы даты окончания интервала
         // и минимальной даты создания/ даты начала к разнице даты окончания интервала и даты начала интервала.
         function getLengthScaleRange(){
             return [0, vis.WIDTH * (vis.dateEnd - getLengthScaleDomain()[1])
@@ -201,7 +203,7 @@ export default class Chart{
                             inc++;
                             console.log("title +id ", d.title +d.id );
                             return d.title +d.id });
-        
+
         vis.rects.exit()
                 .attr("class","exit rect")
                 .transition(vis.t)
@@ -220,7 +222,7 @@ export default class Chart{
                 .attr("x", 0)
                 .attr("width", d => vis.length(d.isOpened ? vis.today - d.createdDate : d.updatedDate - d.createdDate))
                 .attr("fill", "url(#cl1)")
-                .attr('transform', d => 'translate(' + (vis.dateStart > d.createdDate ? -1:1) 
+                .attr('transform', d => 'translate(' + (vis.dateStart > d.createdDate ? -1:1)
                             * vis.translate(Math.abs(vis.dateStart - d.createdDate)) + ',' + 0 + ')');;
 
         vis.rects.enter().append("rect")

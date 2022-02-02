@@ -1,3 +1,4 @@
+import './repoFilter.css';
 
 const repoFilter = ( parent, options ) => {
     const parentElement = document.querySelector(parent);

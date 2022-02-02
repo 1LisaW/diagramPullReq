@@ -1,5 +1,4 @@
-// import './d3.min.js';
-// const d3 = window.d3;
+import * as d3 from "d3";
 
 const newDiagram = (data) =>{
     //
@@ -8,16 +7,16 @@ const newDiagram = (data) =>{
     // определение диапазона окна видимой части графика
     const wrapperGraficD3Width = document.querySelector(".wrapper-grafic-d3").getBoundingClientRect().width;
     const wrapperGraficD3Height = document.querySelector(".wrapper-grafic-d3").getBoundingClientRect().height;
-    
+
     const hourLength = (wrapperGraficD3Width/(7*24));
     let startOfIntervalDay = Math.floor(new Date(data.reduce((acc,curr)=>{
         return Math.min(acc,curr.createdDate)
     },data[data.length-1].createdDate)) / interval) * interval;
-    
-    let today = Math.floor(new Date() / interval) * interval;    
+
+    let today = Math.floor(new Date() / interval) * interval;
     // let endOfIntervalDay = Math.ceil(new Date(data[0].createdDate)  / interval) * interval;
-    let ticks = (today - startOfIntervalDay+2*interval)/interval;    
-    //min-width of diagramm counts as 5px(our slot)*24(ours per day)*days from data (tricks)= 
+    let ticks = (today - startOfIntervalDay+2*interval)/interval;
+    //min-width of diagramm counts as 5px(our slot)*24(ours per day)*days from data (tricks)=
     //рассчет ширины графика
     const graphWidth = Math.max(2*24*(ticks-2),hourLength* 24 * (ticks-2));
 
@@ -60,14 +59,14 @@ const newDiagram = (data) =>{
     linearGradient.append("stop")
                   .attr("offset",24*7*Math.max(2,hourLength)/graphWidth)
                   .style("stop-color","red")
-                  .style("stop-opacity","1");                            
+                  .style("stop-opacity","1");
     svg.append("g")
         .attr("class","axis")
         .attr("transform", "translate(0,"+graphMargin+")")
         .call(x_axis)
-        .selectAll("text")  
+        .selectAll("text")
         .style("text-anchor", "start");
-        
+
      const line = svg.append("line")
         .attr("x1", graphWidth-10)
         .attr("y1", 10)
@@ -75,7 +74,7 @@ const newDiagram = (data) =>{
         .attr("y2", wrapperGraficD3Height)
 
         .attr("stroke", "rgba(0,0,0,0.2)")
-        .style("pointer-events","none");    
+        .style("pointer-events","none");
 
     data.forEach((curr,index)=>{
         const sx = (curr.createdDate-startOfIntervalDay)*diffForPx;
@@ -117,22 +116,22 @@ const newDiagram = (data) =>{
                          .attr("dominant-baseline",'central')
                          .style("text-anchor", isLabelRight ? "end" : "start");
     })
-   
+
     function handleZoom(e) {
       const g = d3.selectAll(".trace");
       const tx =  Math.max(0,Math.min(e.transform.x, graphWidth -wrapperGraficD3Width));
       const ty =  Math.max(0,Math.min(-e.transform.y, graphHeight));
-     
+
       if (e.sourceEvent.type!=="wheel"){
         svg.attr("cursor", "grabbing");
-        
-        g.attr('transform', 'translate(' + tx + ',' + -ty + ')'); 
+
+        g.attr('transform', 'translate(' + tx + ',' + -ty + ')');
         d3.select('svg .axis')
          .attr('transform', 'translate(' + tx + ',' + graphMargin + ')');
       }
-     
+
     }
-   
+
 
     let zoom = d3.zoom()
                  .on('zoom', handleZoom);

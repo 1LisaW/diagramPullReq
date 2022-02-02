@@ -1,6 +1,7 @@
-// import "../../../node_modules/moment/min/moment.min.js";
-// import "../../../node_modules/lightpick/lightpick.js";
-// console.log(window.Lightpick);
+import './dataFilter.css';
+
+import moment from "moment";
+import Lightpick from "lightpick";
 
 const getDateFilter = (dates, callback)=> {
     const chartWrapper = document.getElementById("chart-wrapper");
@@ -10,10 +11,10 @@ const getDateFilter = (dates, callback)=> {
 
     const infoText = document.createElement("div");
     infoText.classList.add("datepicker-text");
-    // setting start values for datepicker's text 
+    // setting start values for datepicker's text
     infoText.innerHTML = moment(dates[1]).subtract(7,'day').format('Do MMMM YYYY ') + ' to ' + moment(dates[1]).format('Do MMMM YYYY ');
     dataWrapper.append(infoText);
-    
+
     const pickerFirstField = document.createElement("input");
     pickerFirstField.setAttribute("id", "datepicker-first-field");
     pickerFirstField.setAttribute("type", "text");
@@ -32,7 +33,7 @@ const getDateFilter = (dates, callback)=> {
         minDate: moment(dates[0]),
         maxDate:
         moment(dates[1]),
-        
+
         onSelect: (start, end) => {
             var str = '';
             str += start ? start.format('Do MMMM YYYY') + ' to ' : '';
