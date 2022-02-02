@@ -1,5 +1,5 @@
-import './d3.min.js';
-const d3 = window.d3;
+// import './d3.min.js';
+// const d3 = window.d3;
 
 const newDiagram = (data) =>{
     //

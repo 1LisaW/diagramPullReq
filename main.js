@@ -1,3 +1,10 @@
+import "d3";
+// * as d3 from "./node_modules/d3/dist/d3.min.js"
+import {moment} from "moment";
+import "lightpick";
+// import * as d3.d3Tip from "./node_modules/d3-tip/dist/index.js"
+// window.d3 = d3;
+
 const newData = fetch('./data/all_prs.json');
 import {newDiagram} from '/diagram.js';
 import {createSorter} from './src/components/sorter/sorter.js';

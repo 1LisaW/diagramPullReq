@@ -1,4 +1,5 @@
 // import "../../../node_modules/d3-tip/dist/index.js";
+// import "./d3-tip.js";
 
 export default class Chart{
     constructor(_parent, _data ){
@@ -120,17 +121,17 @@ export default class Chart{
             }
         });
         // Tooltip
-        // const tip = d3Tip.tip()
-        //     .attr('class', 'd3-tip')
-        //     .html(d => {
-        //         let text = `<strong>Title:</strong> <span style='color:red;text-transform:capitalize'>${d.title}</span><br>`
-        //         text += `<strong>id:</strong> <span style='color:red'>${d.id}</span><br>`
-        //         text += `<strong>Created date:</strong> <span style='color:red;text-transform:capitalize'>${d.createdDate}</span><br>`
-        //         // text += `<strong>isOpen:</strong> <span style='color:red'>${d3.format(".2f")(d.life_exp)}</span><br>`
-        //         // text += `<strong>Population:</strong> <span style='color:red'>${d3.format(",.0f")(d.population)}</span><br>`
-        //         return text
-        //     })
-        // vis.g.call(tip)
+        const tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .html(d => {
+                let text = `<strong>Title:</strong> <span style='color:red;text-transform:capitalize'>${d.title}</span><br>`
+                text += `<strong>id:</strong> <span style='color:red'>${d.id}</span><br>`
+                text += `<strong>Created date:</strong> <span style='color:red;text-transform:capitalize'>${d.createdDate}</span><br>`
+                // text += `<strong>isOpen:</strong> <span style='color:red'>${d3.format(".2f")(d.life_exp)}</span><br>`
+                // text += `<strong>Population:</strong> <span style='color:red'>${d3.format(",.0f")(d.population)}</span><br>`
+                return text
+            })
+        vis.g.call(tip)
 
         // vis.bisectDate = d3.bisector(d => d.createdDate).left;
         // console.log(vis.filtredData);
