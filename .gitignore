@@ -1,2 +1,24 @@
 # Dependency directories
 node_modules/
+data/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.idea
+.vscode
+nbproject
+lefthook-local.yml
+.env
+dist
+$Recycle.Bin
+*.swp
+*.*~
+\#*\#
+*\.\#*
+*___jb_old___
+*___jb_tmp___
+.tern-port
+compiled
+*.iml
+errorShots
+*.DS_Store
