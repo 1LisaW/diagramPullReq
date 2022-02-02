@@ -1,3 +1,4 @@
+import './buttonSlider.css';
 
 const d3 = window.d3;
 const graphMargin = 35;
@@ -14,16 +15,16 @@ const moveSvg = (buttonName) => {
             const tx = Math.max(0,Math.min(axis._groups[0][0].viewportElement.currentTranslate.x+slideValue, svg.width.baseVal.value -widthWrapper));
             axis.attr('transform', 'translate(' + tx + ',' + graphMargin + ')');
             requestList.attr('transform', 'translate(' + tx + ')');
-            
+
             // svg.currentTranslate.x += (svg.currentTranslate.x+4*widthWrapper >= svg.width.baseVal.value ?
                 // 0 : slideValue);
             break;
         case "&gt нед.":
             svg.currentTranslate.x -= (svg.currentTranslate.x-slideValue < 0 ?
                  svg.currentTranslate.x : slideValue);
-            break;    
+            break;
     }
-    
+
 };
 
 const buttonSlider = (buttonName) => {

@@ -1,5 +1,4 @@
-
-// import './sorter.css';
+import './sorter.css';
 
 const  createSorter = (newData,callback)=>{
   const select_block = document.querySelector('header');

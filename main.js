@@ -1,11 +1,3 @@
-import "d3";
-// * as d3 from "./node_modules/d3/dist/d3.min.js"
-import {moment} from "moment";
-import "lightpick";
-// import * as d3.d3Tip from "./node_modules/d3-tip/dist/index.js"
-// window.d3 = d3;
-
-const newData = fetch('./data/all_prs.json');
 import {newDiagram} from '/diagram.js';
 import {createSorter} from './src/components/sorter/sorter.js';
 import { buttonSlider } from './src/components/buttonSlider/buttonSlider.js';
@@ -14,6 +6,13 @@ import Chart from './src/components/chart/chart.js';
 
 import {getDateFilter} from"./src/components/dataFilter/dataFilter.js";
 import { repoFilter } from './src/components/repoFilter/repoFilter.js';
+
+import './fonts/sb-sans-new.css';
+import './fonts/sb-sans.css';
+import './main.css';
+
+// TODO должно быть тоже вынесено в функцию
+const newData = fetch('./data/all_prs.json');
 
 const periodSlider={
     monthAgo:{
@@ -88,10 +87,10 @@ async function getData(sorterOrder,newData){
             isDeclined,
             updatedDate
         }
-        
+
         acc.push(newValue)
         return acc;
-    },[]); 
+    },[]);
     createSorter(currantData,getSorted);
     for (let name in periodSlider){
         buttonSlider(periodSlider[name].text);
@@ -113,11 +112,11 @@ async function getData(sorterOrder,newData){
     const rerenderChart=()=>{
         chart.wrangleVis();
     }
-    
+
     getDateFilter(dateLimits, rerenderChart);
     const datepickerFirstDate = document.getElementById("datepicker-first-field");
     const datepickerSecondDate = document.getElementById("datepicker-second-field");
-    
+
 
     repoFilter( "#chart-wrapper", repoNames );
     const repoFilterElem = document.getElementById("repo-filter");
@@ -137,12 +136,12 @@ async function getData(sorterOrder,newData){
     repoFilterElem.addEventListener("change", () => {
         chart.wrangleVis();
     });
-  
+
     return getSorted(currantData);
-    
+
 }
 function getSorted(currantData){
-    let sorterOrder = document.querySelector(".search_select") ? 
+    let sorterOrder = document.querySelector(".search_select") ?
         document.querySelector(".search_select").value : "createdDate";
     currantData.sort((a,b)=>b[sorterOrder]-a[sorterOrder]);
 
