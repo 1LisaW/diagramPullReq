@@ -17,7 +17,8 @@ module.exports = {
     devServer: {
         open: true,
         watchFiles: [
-            '**/*.*'
+            '**/*.*',
+            '!node_modules'
         ],
         hot: true,
         historyApiFallback: false,

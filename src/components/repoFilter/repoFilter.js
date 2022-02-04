@@ -1,6 +1,7 @@
 import './repoFilter.css';
 
 const repoFilter = ( parent, options ) => {
+    const callbacks =[];
     const parentElement = document.querySelector(parent);
     const wrapper = document.createElement("div");
     wrapper.classList.add("wrapper-repo-filter");
@@ -20,17 +21,36 @@ const repoFilter = ( parent, options ) => {
         repoOption.setAttribute( "value", repo );
         repoOption.innerHTML = repo;
         filterField.append( repoOption );
-        // console.log (repo);
     };
     filterField.addEventListener("change", (event) => {
         const currVal = event.currentTarget.value;
-        if (currVal !== "all"){
-            repoInfo.innerText = "filtered by repo: " + currVal;
+        if (currVal === "all"){
+            repoInfo.innerText = "all repos info";
+        }
+        else if((currVal ==="back")||(currVal === "front")){
+            repoInfo.innerText = `${currVal} repos info`;
         }
         else {
-            repoInfo.innerText ="all repos info";
+            repoInfo.innerText = "filtered by repo: " + currVal;
         }
+        callbacks.forEach( callback => callback());
     })
+    // return (callback =>{
+    //     if (callback){
+    //         callbacks.push(callback);
+    //     }
+    //     return () => filterField.value;
+    // })
+    return {
+        onRepoChange: (callback) => {
+             if ( typeof callback !=="function") {
+                throw new Error("need function");
+             }
+            callbacks.push(callback);
+        },
+        getCurrentRepo: () => filterField.value
+        
+    }
 }
 
 export {repoFilter}

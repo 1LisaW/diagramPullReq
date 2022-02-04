@@ -47,9 +47,3 @@ header{
 .grafic-row--closed {
     background-color: rgb(80, 197, 90);
 }
-/* .chart-wrapper{
-    display: inline-block;
-} */
-#chart{
-    height: 300px;
-}

@@ -1,6 +1,7 @@
 import './sorter.css';
 
-const  createSorter = (newData,callback)=>{
+const  createSorter = (newData)=>{
+  const callbacks = [];
   const select_block = document.querySelector('header');
   const wrapper = document.createElement("div");
   wrapper.classList.add("dropdown");
@@ -26,8 +27,19 @@ const  createSorter = (newData,callback)=>{
     select.appendChild(option);
 }
   select.addEventListener("change",(data)=>{
-     callback(newData,data.currentTarget.value);
+    //  callback(newData,data.currentTarget.value);
+     callbacks.forEach(callback => callback(newData));
   });
+  return {
+    onSorterChange : ( callback ) =>{
+      if ( typeof callback === "function" ){
+        callbacks.push(callback);
+      }
+    },
+    getCurrentSorter : () => {
+      return select.value;
+    }
+  }
 }
 
 export {createSorter};

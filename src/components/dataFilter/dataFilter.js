@@ -1,14 +1,15 @@
 import './dataFilter.css';
+import 'lightpick/css/lightpick.css'
 
 import moment from "moment";
 import Lightpick from "lightpick";
 
-const getDateFilter = (dates, callback)=> {
+const getDateFilter = (dates)=> {
+    const callbacks = [];
     const chartWrapper = document.getElementById("chart-wrapper");
     const dataWrapper = document.createElement("div");
     dataWrapper.classList.add("data-wrapper");
     chartWrapper.append(dataWrapper);
-
     const infoText = document.createElement("div");
     infoText.classList.add("datepicker-text");
     // setting start values for datepicker's text
@@ -39,9 +40,22 @@ const getDateFilter = (dates, callback)=> {
             str += start ? start.format('Do MMMM YYYY') + ' to ' : '';
             str += end ? end.format('Do MMMM YYYY') : '...';
             infoText.innerHTML = str;
-            callback();
+            callbacks.forEach( callback => callback());
         }
     })
+    const getNewInterval = ()=>{
+        return [
+            moment(pickerFirstField.value, "DD/MM/YYYY")._d.getTime(),
+            moment(pickerSecondField.value, "DD/MM/YYYY")._d.getTime()
+        ];
+    }
 
+    return {
+        onIntervalChange : (callback) => {
+        callbacks.push(callback);
+        return getNewInterval;
+        },
+        getCurrantInterval: getNewInterval
+        }
 };
 export {getDateFilter}
